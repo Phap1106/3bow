@@ -2,7 +2,7 @@
 import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
-const repoName = "3bow-web";
+const repoName = "3bowindex";
 
 const nextConfig: NextConfig = {
   output: "export",
