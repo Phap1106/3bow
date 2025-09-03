@@ -9,6 +9,13 @@
 @layer base {
   :root { --radius: 1rem; }
   html, body { height: 100%; }
+  .shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl,
+  .hover\:shadow:hover, .hover\:shadow-sm:hover, .hover\:shadow-md:hover,
+  .hover\:shadow-lg:hover, .hover\:shadow-xl:hover, .hover\:shadow-2xl:hover {
+    --tw-shadow: 0 0 #0000 !important;
+    --tw-shadow-colored: 0 0 #0000 !important;
+    box-shadow: 0 0 #0000 !important;
+  }
 }
 
 /* Reusable components */

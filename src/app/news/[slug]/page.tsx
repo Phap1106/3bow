@@ -1,60 +1,162 @@
-// app/news/[slug]/page.tsx
+// // src/app/news/[slug]/page.tsx
+// import SiteShell from "@/components/siteHeaderFooter";
+// import { notFound } from "next/navigation";
+// import { getArticles, getArticleBySlug } from "@/lib/newsApi";
+
+// const FALLBACK_IMG =
+//   "https://dummyimage.com/1200x630/e5e7eb/9ca3af&text=3BOW+News";
+
+// export async function generateStaticParams() {
+//   const { items } = await getArticles(undefined, 1, 100);
+//   return items.map((n) => ({ slug: n.slug }));
+// }
+
+// export async function generateMetadata({ params }: { params: { slug: string } }) {
+//   try {
+//     const a = await getArticleBySlug(params.slug);
+//     return {
+//       title: `${a.title} • 3BOW`,
+//       description: a.excerpt ?? "Chi tiết bài viết",
+//       openGraph: {
+//         title: a.title,
+//         description: a.excerpt ?? "",
+//         images: [{ url: a.image || FALLBACK_IMG }],
+//       },
+//     };
+//   } catch {
+//     return { title: "Bài viết • 3BOW", description: "Chi tiết bài viết" };
+//   }
+// }
+
+// // ✅ nhận undefined/null
+// function formatDate(v?: string | null) {
+//   if (!v) return "—";
+//   try {
+//     return new Intl.DateTimeFormat("vi-VN", {
+//       dateStyle: "medium",
+//       timeStyle: "short",
+//     }).format(new Date(v));
+//   } catch {
+//     return v ?? "—";
+//   }
+// }
+
+// export default async function NewsDetailPage({
+//   params,
+// }: {
+//   params: { slug: string };
+// }) {
+//   const a = await getArticleBySlug(params.slug).catch(() => null);
+//   if (!a) return notFound();
+
+//   return (
+//     <SiteShell>
+//       <article className="max-w-3xl px-4 py-8 mx-auto">
+//         <div className="mb-6">
+//           <h1 className="text-2xl font-bold md:text-4xl">{a.title}</h1>
+//           <div className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
+//             <span>{a.author || "—"}</span> •{" "}
+//             {/* ✅ dateTime cần string | undefined */}
+//             <time dateTime={a.publishedAt ?? undefined}>
+//               {formatDate(a.publishedAt)}
+//             </time>
+//           </div>
+//         </div>
+
+//         <div className="overflow-hidden border rounded-2xl border-zinc-200/60 dark:border-zinc-800">
+//           <img
+//             src={a.image || FALLBACK_IMG}
+//             alt={a.title}
+//             className="object-cover w-full"
+//           />
+//         </div>
+
+//         <div className="mt-6 prose whitespace-pre-line dark:prose-invert prose-zinc">
+//           {a.content}
+//         </div>
+//       </article>
+//     </SiteShell>
+//   );
+// }
+
+// src/app/news/[slug]/page.tsx
 import SiteShell from "@/components/siteHeaderFooter";
-import { getAllNews, getNewsBySlug } from "../_data";
 import { notFound } from "next/navigation";
+import { getArticles, getArticleBySlug } from "@/lib/newsApi";
+import Markdown from "@/components/Markdown";
+
+const FALLBACK_IMG =
+  "https://dummyimage.com/1200x630/e5e7eb/9ca3af&text=3BOW+News";
 
 export async function generateStaticParams() {
-  return getAllNews().map((n) => ({ slug: n.slug }));
+  const { items } = await getArticles(undefined, 1, 100);
+  return items.map((n) => ({ slug: n.slug }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const item = getNewsBySlug(params.slug);
-  return {
-    title: item ? `${item.title} • 3BOW` : "Bài viết • 3BOW",
-    description: item?.excerpt ?? "Chi tiết bài viết",
-    openGraph: item
-      ? {
-          title: item.title,
-          description: item.excerpt,
-          images: [{ url: item.image }],
-        }
-      : undefined,
-  };
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  try {
+    const a = await getArticleBySlug(params.slug);
+    return {
+      title: `${a.title} • 3BOW`,
+      description: a.excerpt ?? "Chi tiết bài viết",
+      openGraph: {
+        title: a.title,
+        description: a.excerpt ?? "",
+        images: [{ url: a.image || FALLBACK_IMG }],
+      },
+    };
+  } catch {
+    return { title: "Bài viết • 3BOW", description: "Chi tiết bài viết" };
+  }
 }
 
-function formatDate(v: string) {
+function formatDate(v?: string | null) {
+  if (!v) return "—";
   try {
     return new Intl.DateTimeFormat("vi-VN", {
       dateStyle: "medium",
       timeStyle: "short",
     }).format(new Date(v));
   } catch {
-    return v;
+    return v ?? "—";
   }
 }
 
-export default function NewsDetailPage({ params }: { params: { slug: string } }) {
-  const item = getNewsBySlug(params.slug);
-  if (!item) return notFound();
+export default async function NewsDetailPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const a = await getArticleBySlug(params.slug).catch(() => null);
+  if (!a) return notFound();
 
   return (
     <SiteShell>
-      <article className="mx-auto max-w-3xl px-4 py-8">
+      <article className="max-w-3xl px-4 py-8 mx-auto">
         <div className="mb-6">
-          <h1 className="text-2xl md:text-4xl font-bold">{item.title}</h1>
+          <h1 className="text-2xl font-bold md:text-4xl">{a.title}</h1>
           <div className="mt-3 text-sm text-zinc-600 dark:text-zinc-300">
-            <span>{item.author}</span> • <time dateTime={item.publishedAt}>{formatDate(item.publishedAt)}</time>
+            <span>{a.author || "—"}</span> •{" "}
+            <time dateTime={a.publishedAt ?? undefined}>
+              {formatDate(a.publishedAt)}
+            </time>
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-zinc-200/60 dark:border-zinc-800">
-          <img src={item.image} alt={item.title} className="w-full object-cover" />
+        <div className="overflow-hidden border rounded-2xl border-zinc-200/60 dark:border-zinc-800">
+          <img
+            src={a.image || FALLBACK_IMG}
+            alt={a.title}
+            className="object-cover w-full"
+          />
         </div>
 
-        <div className="prose dark:prose-invert prose-zinc mt-6">
-          {item.content.split("\n").map((p, idx) => (
-            <p key={idx}>{p.trim()}</p>
-          ))}
+        <div className="mt-6">
+          <Markdown>{a.content || ""}</Markdown>
         </div>
       </article>
     </SiteShell>
