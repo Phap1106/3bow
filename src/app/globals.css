@@ -4,29 +4,40 @@
 @tailwind utilities;
 
 
+/* containers & utilities */
+.container-max{ @apply px-4 mx-auto max-w-7xl; }
 
-
-@layer base {
-  :root { --radius: 1rem; }
-  html, body { height: 100%; }
-  .shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl,
-  .hover\:shadow:hover, .hover\:shadow-sm:hover, .hover\:shadow-md:hover,
-  .hover\:shadow-lg:hover, .hover\:shadow-xl:hover, .hover\:shadow-2xl:hover {
-    --tw-shadow: 0 0 #0000 !important;
-    --tw-shadow-colored: 0 0 #0000 !important;
-    box-shadow: 0 0 #0000 !important;
-  }
+/* input mặc định */
+.input{
+  @apply w-full px-3 text-sm transition bg-white border rounded-lg outline-none h-11 border-zinc-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20;
+}
+/* input có lỗi */
+.input-invalid{
+  @apply border-red-500 focus:border-red-500 focus:ring-red-500/20;
 }
 
-/* Reusable components */
-@layer components {
-  .container-max { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
-  .section { @apply py-16 lg:py-24; }
-  .card { @apply rounded-2xl border border-zinc-200/60 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/70; }
-  .btn-primary { @apply inline-flex items-center gap-2 rounded-xl bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-400 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-zinc-200; }
-  .btn-secondary { @apply inline-flex items-center gap-2 rounded-xl border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-800 hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800; }
-  .section-title { @apply text-2xl md:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white; }
-  .muted { @apply text-zinc-600 dark:text-zinc-400; }
-  .input { @apply w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-300 dark:bg-zinc-900 dark:border-zinc-800; }
-  .nav-link { @apply text-sm text-zinc-700 hover:underline dark:text-zinc-300; }
+/* nút bấm */
+.btn{ @apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 font-medium transition; }
+.btn-raise{ @apply shadow-sm hover:shadow-md active:shadow; }
+.btn-primary{ @apply bg-[#1677ff] text-white hover:bg-[#0b5bd3]; }
+.btn-success{ @apply text-white bg-emerald-600 hover:bg-emerald-600/90; }
+.btn-secondary{
+  @apply bg-white border border-zinc-300 hover:bg-violet-50 hover:text-violet-700 hover:border-violet-300;
+}
+  .input {
+    @apply w-full px-3 text-sm transition bg-white border rounded-lg outline-none h-11 border-zinc-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20;
+  }
+  .input-icon {              /* thêm khoảng trống bên trái cho icon */
+    @apply pl-10;
+  }
+  :root {
+  /* tăng độ mịn text */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* heading mặc định dùng font heading (nếu bạn muốn áp toàn cục) */
+h1, h2, h3, .font-heading {
+  font-family: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }

@@ -88,3 +88,15 @@ src/auth/
   roles.decorator.ts
   auth.guard.ts
   roles.guard.ts"# 3bow-0109" 
+
+
+src/
+└─ app/
+   └─ admin/
+      ├─ page.tsx                      // nhẹ, chỉ điều hướng + layout
+      └─ _panels/
+         ├─ PostsPanel.tsx             // quản lý bài viết + phân trang
+         ├─ UsersPanel.tsx             // quản lý supportAdmin + phân trang
+         └─ EditSupportForm.tsx        // form sửa support inline
+components/
+└─ ui/Pagination.tsx                   // pager dùng chung (đã gửi trước)

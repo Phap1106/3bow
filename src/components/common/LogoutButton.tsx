@@ -1,35 +1,27 @@
 // src/components/common/LogoutButton.tsx
 "use client";
-import * as React from "react";
 import { useRouter } from "next/navigation";
-import { LogOut } from "lucide-react";
-import { logout } from "@/lib/authApi";
+import { logout } from "@/lib/adminApi";
+import { toast } from "sonner";
 
-export default function LogoutButton({ className = "" }: { className?: string }) {
+export default function LogoutButton() {
   const router = useRouter();
-  const [loading, setLoading] = React.useState(false);
 
-  async function onClick() {
-    setLoading(true);
+  const onLogout = async () => {
     try {
-      await logout();                 // gọi BE xoá cookie
-      router.replace("/login");       // về trang login
-    } catch (e: any) {
-      alert(e?.message || "Logout failed");
-    } finally {
-      setLoading(false);
+      await logout();
+      toast.success("Đã đăng xuất");
+      router.replace("/login");
+      router.refresh();
+    } catch (e) {
+      console.error(e);
+      toast.error("Đăng xuất thất bại");
     }
-  }
+  };
 
   return (
-    <button
-      onClick={onClick}
-      disabled={loading}
-      className={`h-9 px-3 border rounded-xl flex items-center gap-2 ${className}`}
-      title="Đăng xuất"
-    >
-      <LogOut size={16} />
-      {loading ? "Đang đăng xuất…" : "Đăng xuất"}
+    <button onClick={onLogout} className="inline-flex items-center px-3 border rounded-md h-9">
+      Đăng xuất
     </button>
   );
 }

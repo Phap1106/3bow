@@ -17,7 +17,15 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {  fontFamily: {
+        // body
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        // heading
+        heading: ["var(--font-heading)", "var(--font-sans)", "system-ui", "sans-serif"],
+      },
+      letterSpacing: {
+        tighter2: "-0.02em",
+      },},
   },
 plugins: [require("@tailwindcss/typography")],
   

@@ -1,32 +1,3 @@
-// "use client";
-// import * as React from "react";
-
-// export default function Modal({
-//   open, onClose, title, children,
-// }: {
-//   open: boolean;
-//   onClose: () => void;
-//   title?: string;
-//   children: React.ReactNode;
-// }) {
-//   if (!open) return null;
-//   return (
-//     <div className="fixed inset-0 z-[60]">
-//       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-//       <div className="absolute inset-0 flex items-center justify-center p-4">
-//         <div className="w-full max-w-lg bg-white border shadow-xl rounded-2xl border-zinc-200 dark:border-zinc-800 dark:bg-zinc-900">
-//           {title && (
-//             <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
-//               <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">{title}</h3>
-//             </div>
-//           )}
-//           <div className="px-5 py-4">{children}</div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 
 "use client";
 import * as React from "react";
